@@ -1,0 +1,32 @@
+[alias]
+    fixup = "!f() { TARGET=$(git rev-parse "$1"); git commit --fixup=$TARGET ${@:2} && EDITOR=true git rebase -i --autostash --autosquash $TARGET^; }; f"
+[user]
+	email = rajan.ponnappan@getcruise.com
+	name = Rajan Ponnappan
+[merge]
+	; tool = meld
+	tool = kdiff3
+[diff]
+	guitool = meld
+	; tool = meld
+    tool = icdiff
+[difftool]
+	prompt = false
+[mergetool "kdiff3"]
+	keepBackup = false
+	trustExitCode = false
+[difftool "kdiff3"]
+	keepBackup = false
+	trustExitCode = false
+[difftool "icdiff"] 
+    cmd = /usr/local/bin/icdiff --line-numbers $LOCAL $REMOTE
+[core]
+	editor = vim
+	excludesfile = ~/.gitignore
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[url "git+ssh://git.launchpad.net/"]
+        insteadof = lp:

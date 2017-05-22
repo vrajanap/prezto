@@ -11,3 +11,8 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+export GOPATH=$HOME/go
+export GOROOT=$HOME/myapps/go
+export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
+source /usr/local/bin/virtualenvwrapper.sh
+

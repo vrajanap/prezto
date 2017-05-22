@@ -1,0 +1,237 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'tpope/vim-fugitive'
+
+Plugin 'mileszs/ack.vim'
+
+" Plugin 'Valloric/YouCompleteMe'
+
+Plugin 'fisadev/vim-isort'
+
+" Plugin 'scrooloose/nerdtree'
+
+" Plugin 'Xuyuanp/nerdtree-git-plugin'
+
+Plugin 'vim-syntastic/syntastic'
+
+Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+
+Plugin 'ctrlpvim/ctrlp.vim'
+
+Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            
+" required
+
+
+" " Nerd tree
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" map <C-n> :NERDTreeToggle<CR>
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" 
+
+" "You complete me
+" nnoremap ,gl :YcmCompleter GoToDeclaration<CR>
+" nnoremap ,gf :YcmCompleter GoToDefinition<CR>
+" nnoremap ,gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"   
+" let g:ycm_key_invoke_completion = '<C-Space>'
+" let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>']
+" let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
+ 
+" isort. not sure if we need this..
+let g:vim_isort_map = '<C-i>'
+
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+""  Vundle plugin install end. 
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+" bind K to grep word under cursor
+nmap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+nnoremap \ :Ag<SPACE>
+
+
+" Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+
+
+" ctrlp 
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " Linux/MacOSX
+
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+    \ 'file': '\v\.(exe|so|dll)$',
+    \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+    \ } 
+
+
+" default mappings
+
+set clipboard=unnamed
+set modelines=0
+
+" nnoremap / /\v
+" vnoremap / /\v
+
+set shiftwidth=4 softtabstop=4
+set incsearch ignorecase hlsearch smartcase showmatch gdefault
+" Press space to clear search highlighting and any message already displayed.
+nnoremap <silent> <Space> :silent noh<Bar>echo<CR>
+
+
+set showcmd
+set cmdheight=2
+
+" I like 4 stops
+set tabstop=4
+
+" Spaces instead of tabs
+set expandtab
+
+" Always  set auto indenting on
+set autoindent
+
+set visualbell
+set hidden
+set wildmode=list:longest
+set nocursorline
+set ttyfast
+
+set ts=4
+set nowrap
+set guifont=lucida_console:h8
+set lsp=0
+set mousehide
+set noequalalways
+set number
+set bs=2
+set scrolloff=8
+set splitright
+set shiftround
+set showbreak=----
+set smartindent
+set smarttab
+set softtabstop=4
+set shiftwidth=4
+set history=99
+set linebreak
+set mousemodel=popup
+set showmode
+"set patchmode=.orig
+:map <Up> gk
+:map <Down> gj
+"set virtualedit=all
+set tags=.\tags,.\*\tags
+"set tags=.\**\tags  "recursively slow...
+"set tags=.\tags,\\hankh1\perl\tags
+set winminwidth=0
+
+set ww=[,]
+
+
+" Turn syntax highlighting on
+syntax on
+filetype plugin indent on
+
+" Set to auto read when a file is changed from the outside
+set autoread
+
+
+" Display all the options when autocompleting
+set wildmenu
+
+set paste
+
+" To save, ctrl-s.
+nmap <c-s> :w<CR>
+imap <c-s> <Esc>:w<CR>a
+
+
+"func Backspace()
+"  if col('.') == 1
+"    if line('.')  != 1
+"      return  "\<ESC>kA\<Del>"
+"    else
+"      return ""
+"    endif
+"  else
+"    return "\<Left>\<Del>"
+"  endif
+"endfunc
+"
+"inoremap <BS> <c-r>=Backspace()<CR>
+
+set ruler
+set backspace=indent,eol,start
+
+syntax enable "Enable syntax hl
+
+if has("gui_running")
+  set guioptions-=T
+  set t_Co=256
+endif
+
+set background=dark
+
+set encoding=utf-8
+try
+    lang en_US
+catch
+endtry
+
+" set ffs=unix,dos,mac "Default file types
+autocmd BufWritePre *.py :retab |  :%s/\s\+$//e
+autocmd BufWritePre *.cpp,*.sh  :%s/\s\+$//e
+let g:ackprg = 'ag --vimgrep'
+
