@@ -63,6 +63,8 @@ if ! zstyle -t ':prezto:module:git:alias' skip 'yes'; then
   alias gcr='git revert'
   alias gcR='git reset "HEAD^"'
   alias gcs='git show'
+  alias gcsf='git show --pretty="" --name-only '
+  # alias gcsf='git diff-tree --no-commit-id --name-only -r '
   alias gcl='git-commit-lost'
 
   # Conflict (C)
@@ -85,6 +87,7 @@ if ! zstyle -t ':prezto:module:git:alias' skip 'yes'; then
 
   # Fetch (f)
   alias gf='git fetch'
+  alias gfap='git fetch --prune --all'
   alias gfa='git fetch --all'
   alias gfc='git clone'
   alias gfm='git pull'
@@ -178,8 +181,10 @@ if ! zstyle -t ':prezto:module:git:alias' skip 'yes'; then
   alias gl='git log --topo-order --pretty=format:"${_git_log_medium_format}"'
   alias gls='git log --topo-order --stat --pretty=format:"${_git_log_medium_format}"'
   alias gld='git log --topo-order --stat --patch --full-diff --pretty=format:"${_git_log_medium_format}"'
+  alias glgt='git log --topo-order --graph  --pretty=format:"%C(green)%h %C(yellow) %aI %C(blue)  %an %Creset%s %C(red) %d "'
+  alias glg='git log --graph  --pretty=format:"%C(green)%h %C(yellow) %aI %C(blue)  %an %Creset%s %C(red) %d "'
   alias glo='git log --topo-order --pretty=format:"${_git_log_oneline_format}"'
-  alias glg='git log --topo-order --all --graph --pretty=format:"${_git_log_oneline_format}"'
+  # alias glg='git log --topo-order --all --graph --pretty=format:"${_git_log_oneline_format}"'
   alias glb='git log --topo-order --pretty=format:"${_git_log_brief_format}"'
   alias glc='git shortlog --summary --numbered'
 
@@ -189,6 +194,7 @@ if ! zstyle -t ':prezto:module:git:alias' skip 'yes'; then
   alias gmF='git merge --no-ff'
   alias gma='git merge --abort'
   alias gmt='git mergetool'
+  alias gmff="git merge --ff-only"
 
   # Push (p)
   alias gp='git push'
@@ -255,4 +261,5 @@ if ! zstyle -t ':prezto:module:git:alias' skip 'yes'; then
   alias gwC='git clean -f'
   alias gwx='git rm -r'
   alias gwX='git rm -rf'
+  alias gwdf='git diff --pretty="" --name-only '
 fi
