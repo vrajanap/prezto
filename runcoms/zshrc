@@ -11,8 +11,25 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+export PATH=$HOME/Library/Python/2.7/bin:$HOME/.local/bin:$PATH
 export GOPATH=$HOME/go
-export GOROOT=$HOME/myapps/go
 export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
-source /usr/local/bin/virtualenvwrapper.sh
+source virtualenvwrapper.sh
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
+export CATALINA_HOME=/usr/share/tomcat7
 
+alias ff='find . -iname $@'
+alias fp="fzf --preview 'pygmentize -g  {} 2> /dev/null '"
+alias vp="vim \`fp\`"
+
+
+# zsh
+alias vim="stty stop '' -ixoff ; vim"
+# `Frozing' tty, so after any command terminal settings will be restored
+ttyctl -f
+
+
+fpath=(/usr/local/share/zsh-completions $fpath)
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
