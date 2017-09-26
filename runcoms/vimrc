@@ -3,6 +3,8 @@ filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.fzf
+
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
@@ -25,7 +27,7 @@ Plugin 'fisadev/vim-isort'
 
 " Plugin 'Xuyuanp/nerdtree-git-plugin'
 
-Plugin 'vim-syntastic/syntastic'
+" Plugin 'vim-syntastic/syntastic'
 
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
@@ -33,27 +35,31 @@ Plugin 'ctrlpvim/ctrlp.vim'
 
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 
+Plugin 'w0rp/ale'
+
+Plugin 'JamshedVesuna/vim-markdown-preview'
+
 " All of your Plugins must be added before the following line
-call vundle#end()            
+call vundle#end()
 " required
 
 
-" " Nerd tree
+" Nerd tree
 " autocmd StdinReadPre * let s:std_in=1
 " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-" map <C-n> :NERDTreeToggle<CR>
+" map <C-k> :NERDTreeToggle<CR>
 " autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-" 
+
 
 " "You complete me
 " nnoremap ,gl :YcmCompleter GoToDeclaration<CR>
 " nnoremap ,gf :YcmCompleter GoToDefinition<CR>
 " nnoremap ,gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
-"   
+"
 " let g:ycm_key_invoke_completion = '<C-Space>'
 " let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>']
 " let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
- 
+
 " isort. not sure if we need this..
 let g:vim_isort_map = '<C-i>'
 
@@ -70,7 +76,7 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-""  Vundle plugin install end. 
+""  Vundle plugin install end.
 
 " The Silver Searcher
 if executable('ag')
@@ -92,18 +98,18 @@ nnoremap \ :Ag<SPACE>
 
 
 " Syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+"
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 
 
-
-" ctrlp 
+" ctrlp
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
@@ -113,12 +119,17 @@ let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|hg|svn)$',
     \ 'file': '\v\.(exe|so|dll)$',
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
-    \ } 
+    \ }
 
+
+" Markdown plugin shortcut
+let vim_markdown_preview_hotkey='<C-j>'
+let vim_markdown_preview_temp_file=0
+let vim_markdown_preview_github=1
 
 " default mappings
 
-set clipboard=unnamed
+set clipboard=unnamedplus
 set modelines=0
 
 " nnoremap / /\v
@@ -145,11 +156,10 @@ set autoindent
 set visualbell
 set hidden
 set wildmode=list:longest
-set nocursorline
+set cursorline
 set ttyfast
-
-set ts=4
-set nowrap
+set wrap
+set nolist
 set guifont=lucida_console:h8
 set lsp=0
 set mousehide
@@ -162,8 +172,6 @@ set shiftround
 set showbreak=----
 set smartindent
 set smarttab
-set softtabstop=4
-set shiftwidth=4
 set history=99
 set linebreak
 set mousemodel=popup
@@ -192,11 +200,6 @@ set autoread
 set wildmenu
 
 set paste
-
-" To save, ctrl-s.
-nmap <c-s> :w<CR>
-imap <c-s> <Esc>:w<CR>a
-
 
 "func Backspace()
 "  if col('.') == 1
@@ -232,6 +235,35 @@ endtry
 
 " set ffs=unix,dos,mac "Default file types
 autocmd BufWritePre *.py :retab |  :%s/\s\+$//e
-autocmd BufWritePre *.cpp,*.sh  :%s/\s\+$//e
+autocmd BufWritePre *.go,*rc,*.sql,*.cpp,*.txt,*.sh,*.yaml  :retab | :%s/\s\+$//e
 let g:ackprg = 'ag --vimgrep'
 
+" If the current buffer has never been saved, it will have no name,
+" call the file browser to save it, otherwise just save it.
+command -nargs=0 -bar Update if &modified
+                           \|    if empty(bufname('%'))
+                           \|        browse confirm write
+                           \|    else
+                           \|        confirm write
+                           \|    endif
+                           \|endif
+
+" " To save, ctrl-s.
+" nmap <c-s> :w<CR>
+" imap <c-s> <Esc>:w<CR>a
+
+noremap <silent> <C-s>          :update<CR>
+nnoremap <silent> <C-s>         :<C-u>Update<CR>
+vnoremap <silent> <C-s>         <C-C>:update<CR>
+inoremap <silent> <C-s>         <C-O>:update<CR>
+
+
+command! -range=% Isort :<line1>,<line2>! isort
+
+set shell=/bin/sh
+set switchbuf=usetab
+nnoremap <F8> :sbnext<CR>
+nnoremap <S-F8> :sbprevious<CR>
+
+
+nnoremap [19;2~ :sbprevious<CR>
