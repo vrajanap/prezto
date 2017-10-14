@@ -31,6 +31,7 @@ zstyle ':prezto:load' pmodule \
   'directory' \
   'git' \
   'autosuggestions' \
+  'history-substring-search' \
   'ssh' \
   'syntax-highlighting' \
   'tmux' \
@@ -72,8 +73,7 @@ zstyle ':prezto:module:editor' ps-context 'yes'
 #
 
 # Ignore submodules when they are 'dirty', 'untracked', 'all', or 'none'.
-# zstyle ':prezto:module:git:status:ignore' submodules 'all'
-
+zstyle ':prezto:module:git:status:ignore' submodules 'all'
 zstyle ':prezto:module:git:alias' skip 'no'
 
 #
@@ -140,10 +140,10 @@ zstyle ':prezto:module:prompt' pwd-length 'short'
 #
 
 # Auto switch the Python virtualenv on directory change.
-# zstyle ':prezto:module:python:virtualenv' auto-switch 'yes'
+zstyle ':prezto:module:python:virtualenv' auto-switch 'yes'
 
 # Automatically initialize virtualenvwrapper if pre-requisites are met.
-# zstyle ':prezto:module:python:virtualenv' initialize 'yes'
+zstyle ':prezto:module:python:virtualenv' initialize 'yes'
 
 #
 # Screen
@@ -210,7 +210,7 @@ zstyle ':prezto:module:terminal:multiplexer-title' format '%s'
 zstyle ':prezto:module:tmux:auto-start' local 'yes'
 
 # Auto start a session when Zsh is launched in a SSH connection.
-# zstyle ':prezto:module:tmux:auto-start' remote 'yes'
+zstyle ':prezto:module:tmux:auto-start' remote 'yes'
 
 # Integrate with iTerm2.
 # zstyle ':prezto:module:tmux:iterm' integrate 'yes'

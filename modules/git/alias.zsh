@@ -193,6 +193,7 @@ if ! zstyle -t ':prezto:module:git:alias' skip 'yes'; then
   # alias glg='git log --topo-order --all --graph --pretty=format:"${_git_log_oneline_format}"'
   alias glb='git log --topo-order --pretty=format:"${_git_log_brief_format}"'
   alias glc='git shortlog --summary --numbered'
+  alias glgtd='git log --topo-order --graph --branches --oneline --decorate'
 
   # Merge (m)
   alias gm='git merge'
@@ -268,4 +269,8 @@ if ! zstyle -t ':prezto:module:git:alias' skip 'yes'; then
   alias gwx='git rm -r'
   alias gwX='git rm -rf'
   alias gwdf='git diff --pretty="" --name-only '
+
+  # Custom aliases
+  alias glh='glg HEAD@\{yesterday\}..HEAD'
+
 fi

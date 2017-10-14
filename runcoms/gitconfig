@@ -19,7 +19,7 @@
 	keepBackup = false
 	trustExitCode = false
 [difftool "icdiff"] 
-    cmd = /usr/local/bin/icdiff --line-numbers $LOCAL $REMOTE
+    	cmd = icdiff --line-numbers $LOCAL $REMOTE
 [core]
 	editor = vim
 	excludesfile = ~/.gitignore

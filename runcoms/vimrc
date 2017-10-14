@@ -129,8 +129,14 @@ let vim_markdown_preview_github=1
 
 " default mappings
 
-set clipboard=unnamedplus
+set clipboard+=unnamedplus
 set modelines=0
+set paste
+set go+=a
+" copy and paste
+vmap <C-c> "+yi
+vmap <C-x> "+c
+
 
 " nnoremap / /\v
 " vnoremap / /\v
@@ -199,7 +205,6 @@ set autoread
 " Display all the options when autocompleting
 set wildmenu
 
-set paste
 
 "func Backspace()
 "  if col('.') == 1
