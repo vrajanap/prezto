@@ -23,9 +23,9 @@ Plugin 'mileszs/ack.vim'
 
 Plugin 'fisadev/vim-isort'
 
-" Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
 
-" Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 
 " Plugin 'vim-syntastic/syntastic'
 
@@ -45,10 +45,10 @@ call vundle#end()
 
 
 " Nerd tree
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-" map <C-k> :NERDTreeToggle<CR>
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+map <C-k> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 
 " "You complete me
