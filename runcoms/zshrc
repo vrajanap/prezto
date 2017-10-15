@@ -29,6 +29,9 @@ alias vim="stty stop '' -ixoff ; vim"
 # `Frozing' tty, so after any command terminal settings will be restored
 ttyctl -f
 
+autoload -Uz promptinit
+    promptinit
+    prompt skwp
 
 fpath=(/usr/local/share/zsh-completions $fpath)
 
