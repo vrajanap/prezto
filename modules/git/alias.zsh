@@ -197,6 +197,7 @@ if ! zstyle -t ':prezto:module:git:alias' skip 'yes'; then
 
   # Merge (m)
   alias gm='git merge'
+  alias gM='git merge --no-edit'
   alias gmC='git merge --no-commit'
   alias gmF='git merge --no-ff'
   alias gma='git merge --abort'
