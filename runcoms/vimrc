@@ -28,8 +28,9 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 
 " Plugin 'vim-syntastic/syntastic'
+" syntactic conflicts with ale
 
-Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+" Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 Plugin 'ctrlpvim/ctrlp.vim'
 
@@ -39,17 +40,47 @@ Plugin 'w0rp/ale'
 
 Plugin 'JamshedVesuna/vim-markdown-preview'
 
+" Plugin 'zefei/vim-wintabs'
+
+Plugin 'fatih/vim-go'
+
+Plugin 'majutsushi/tagbar'
+
+Plugin 'christoomey/vim-tmux-navigator'
+
 " All of your Plugins must be added before the following line
 call vundle#end()
 " required
 
+" w0rp ale
+let g:airline#extensions#ale#enabled = 0
+
+nmap <silent> <C-,> <Plug>(ale_previous_wrap)
+nmap <silent> <C-.> <Plug>(ale_next_wrap)
+let g:ale_completion_enabled = 1
+
+" Set this variable to 1 to fix files when you save them.
+let g:ale_fix_on_save = 1
+
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['prettier', 'eslint'],
+\   'python': ['isort', 'autopep8'],
+\}
+
+let g:ale_sign_column_always = 1
+
+" Check Python files with flake8 and pylint.
+let g:ale_linters = {'python': ['flake8', 'pylint']}
 
 " Nerd tree
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-map <C-k> :NERDTreeToggle<CR>
+map <F2> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+" majutsushi/tagbar
+nmap <F9> :TagbarToggle<CR>
 
 " "You complete me
 " nnoremap ,gl :YcmCompleter GoToDeclaration<CR>
@@ -90,8 +121,8 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
-" bind K to grep word under cursor
-nmap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+" bind T to grep word under cursor
+nmap T :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap \ :Ag<SPACE>
@@ -113,7 +144,6 @@ nnoremap \ :Ag<SPACE>
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " Linux/MacOSX
 
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|hg|svn)$',
@@ -123,15 +153,26 @@ let g:ctrlp_custom_ignore = {
 
 
 " Markdown plugin shortcut
-let vim_markdown_preview_hotkey='<C-j>'
+let vim_markdown_preview_hotkey='<C-m>'
 let vim_markdown_preview_temp_file=0
-let vim_markdown_preview_github=1
+let vim_markdown_preview_toggle=2
+let vim_markdown_preview_github=0
+let vim_markdown_preview_pandoc=1
+
+" Write all buffers before navigating from Vim to tmux pane
+let g:tmux_navigator_save_on_switch = 2
+
+" let g:tmux_navigator_no_mappings = 1
+" nnoremap <silent> <S-C-H> :TmuxNavigateLeft<cr>
+" nnoremap <silent> <S-C-J> :TmuxNavigateDown<cr>
+" nnoremap <silent> <S-C-K> :TmuxNavigateUp<cr>
+" nnoremap <silent> <S-C-L> :TmuxNavigateRight<cr>
+" nnoremap <silent> <C-\> :TmuxNavigatePrevious<cr>
 
 " default mappings
 
 set clipboard+=unnamedplus
 set modelines=0
-set paste
 set go+=a
 " copy and paste
 vmap <C-c> "+yi
@@ -161,8 +202,16 @@ set autoindent
 
 set visualbell
 set hidden
+
+" Display all the options when autocompleting
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " Linux/MacOSX
+set wildmenu
 set wildmode=list:longest
-set cursorline
+set wildchar=<Tab>
+set wildcharm=<C-Z>
+nnoremap <F10> :b <C-Z>
+
+" set cursorline
 set ttyfast
 set wrap
 set nolist
@@ -202,9 +251,6 @@ filetype plugin indent on
 set autoread
 
 
-" Display all the options when autocompleting
-set wildmenu
-
 
 "func Backspace()
 "  if col('.') == 1
@@ -239,8 +285,7 @@ catch
 endtry
 
 " set ffs=unix,dos,mac "Default file types
-autocmd BufWritePre *.py :retab |  :%s/\s\+$//e
-autocmd BufWritePre *.go,*rc,*.sql,*.cpp,*.txt,*.sh,*.yaml  :retab | :%s/\s\+$//e
+autocmd BufWritePre *.py,*.go,*rc,*.sql,*.cpp,*.txt,*.sh,*.yaml,*.md  :retab | :%s/\s\+$//e
 let g:ackprg = 'ag --vimgrep'
 
 " If the current buffer has never been saved, it will have no name,
@@ -263,12 +308,16 @@ vnoremap <silent> <C-s>         <C-C>:update<CR>
 inoremap <silent> <C-s>         <C-O>:update<CR>
 
 
-command! -range=% Isort :<line1>,<line2>! isort
+" command! -range=% Isort :<line1>,<line2>! isort
+
+set paste
 
 set shell=/bin/sh
 set switchbuf=usetab
-nnoremap <F8> :sbnext<CR>
-nnoremap <S-F8> :sbprevious<CR>
+nnoremap <F8> :bnext<CR>
+nnoremap <S-F8> :bprevious<CR>
+nnoremap [19;2~ :bprevious<CR>
 
 
-nnoremap [19;2~ :sbprevious<CR>
+set ssop-=options    " do not store global and local values in a session
+set ssop-=folds      " do not store folds
