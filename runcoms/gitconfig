@@ -1,7 +1,7 @@
 [alias]
     fixup = "!f() { TARGET=$(git rev-parse "$1"); git commit --fixup=$TARGET ${@:2} && EDITOR=true git rebase -i --autostash --autosquash $TARGET^; }; f"
 [user]
-	email = rajan.ponnappan@getcruise.com
+	email = vrajanap@gmail.com
 	name = Rajan Ponnappan
 [merge]
 	; tool = meld

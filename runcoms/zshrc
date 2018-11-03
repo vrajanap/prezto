@@ -11,17 +11,20 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
-export PATH=$HOME/Library/Python/2.7/bin:$HOME/.local/bin:$PATH
+PYPATH=$HOME/Library/Python/2.7/bin:$HOME/.local/bin
+JSPATH=$HOME/.yarn
 export GOPATH=$HOME/go
-export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
-source virtualenvwrapper.sh
+export PATH=$PYPATH:$JSPATH/bin:$GOPATH/bin:$PATH
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
-export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
-export CATALINA_HOME=/usr/share/tomcat7
+export JAVA_HOME=/usr/lib/jvm/default-java
 
 alias ff='find . -iname $@'
 alias fp="fzf --preview 'pygmentize -g  {} 2> /dev/null '"
 alias vp="vim \`fp\`"
+
+if [ $commands[kubectl] ]; then
+  source <(kubectl completion zsh)
+fi
 
 
 # zsh
@@ -36,3 +39,8 @@ autoload -Uz promptinit
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
