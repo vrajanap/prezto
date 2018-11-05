@@ -35,6 +35,7 @@ zstyle ':prezto:load' pmodule \
   'syntax-highlighting' \
   'tmux' \
   'spectrum' \
+  'docker' \
   'utility' \
   'completion' \
   'prompt'
