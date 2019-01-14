@@ -190,7 +190,9 @@ exec syndaemon -i 0.5 -d -K
 # exec_always xrandr --output eDP-2 --mode 2560x1440 --scale .6x.6
 # exec_always xrandr --output eDP-1 --mode 1600x900 --scale 1x1
 # exec_always xrandr --output eDP-1 --off --output HDMI-1 --auto --primary  --output DP-1  --auto  --rotate left --left-of HDMI-1  --output HDMI-2 --off
-exec_always $HOME/.screenlayout/single_mon.sh
+exec_always ~/.screenlayout/single_mon.sh
+bindsym $mod+p exec ~/.screenlayout/dual_mon.sh
+bindsym $mod+Shift+p exec ~/.screenlayout/single_mon.sh
 
 exec --no-startup-id nm-applet
 focus_follows_mouse yes
