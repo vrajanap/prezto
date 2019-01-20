@@ -38,7 +38,7 @@ Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 
 Plugin 'w0rp/ale'
 
-Plugin 'JamshedVesuna/vim-markdown-preview'
+" Plugin 'JamshedVesuna/vim-markdown-preview'
 
 " Plugin 'zefei/vim-wintabs'
 Plugin 'pangloss/vim-javascript'
@@ -163,11 +163,11 @@ let g:ctrlp_custom_ignore = {
 
 
 " Markdown plugin shortcut
-let vim_markdown_preview_hotkey='<C-m>'
-let vim_markdown_preview_temp_file=0
-let vim_markdown_preview_toggle=2
-let vim_markdown_preview_github=0
-let vim_markdown_preview_pandoc=1
+" let vim_markdown_preview_hotkey='<C-p>'
+" let vim_markdown_preview_temp_file=0
+" let vim_markdown_preview_toggle=2
+" let vim_markdown_preview_github=1
+" let vim_markdown_preview_pandoc=0
 
 " Write all buffers before navigating from Vim to tmux pane
 let g:tmux_navigator_save_on_switch = 2
