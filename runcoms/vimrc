@@ -21,13 +21,13 @@ Plugin 'mileszs/ack.vim'
 
 " Plugin 'Valloric/YouCompleteMe'
 
-Plugin 'fisadev/vim-isort'
+" Plugin 'fisadev/vim-isort'
 
 Plugin 'scrooloose/nerdtree'
 
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 
-" Plugin 'vim-syntastic/syntastic'
+Plugin 'vim-syntastic/syntastic'
 " syntactic conflicts with ale
 
 " Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
@@ -36,52 +36,47 @@ Plugin 'ctrlpvim/ctrlp.vim'
 
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 
-Plugin 'w0rp/ale'
+" Plugin 'w0rp/ale'
 
 " Plugin 'JamshedVesuna/vim-markdown-preview'
 
 " Plugin 'zefei/vim-wintabs'
-Plugin 'pangloss/vim-javascript'
 
 Plugin 'fatih/vim-go'
-
-Plugin 'othree/html5.vim'
 
 Plugin 'majutsushi/tagbar'
 
 Plugin 'christoomey/vim-tmux-navigator'
 
+Plugin 'HerringtonDarkholme/yats.vim'
+
+Plugin 'leafgarland/typescript-vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()
 " required
 
-" w0rp ale
-let g:airline#extensions#ale#enabled = 0
 
-nmap <silent> <C-,> <Plug>(ale_previous_wrap)
-nmap <silent> <C-.> <Plug>(ale_next_wrap)
-let g:ale_completion_enabled = 1
-
-" Set this variable to 1 to fix files when you save them.
-let g:ale_fix_on_save = 1
-
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['prettier', 'eslint'],
-\   'python': ['isort', 'autopep8'],
-\}
-
-let g:ale_sign_column_always = 1
-
-" Check Python files with flake8 and pylint.
-let g:ale_linters = {'python': ['flake8', 'pylint']}
-
-" use jshint
-let g:syntastic_javascript_checkers = ['jshint']
-
-" show any linting errors immediately
-let g:syntastic_check_on_open = 1
-
+" " w0rp ale
+" let g:airline#extensions#ale#enabled = 0
+"
+" nmap <silent> <C-,> <Plug>(ale_previous_wrap)
+" nmap <silent> <C-.> <Plug>(ale_next_wrap)
+" let g:ale_completion_enabled = 1
+"
+" " Set this variable to 1 to fix files when you save them.
+" let g:ale_fix_on_save = 1
+"
+" let g:ale_fixers = {
+" \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+" \   'javascript': ['prettier', 'eslint'],
+" \   'python': ['isort', 'autopep8'],
+" \}
+"
+" let g:ale_sign_column_always = 1
+"
+" " Check Python files with flake8 and pylint.
+" let g:ale_linters = {'python': ['flake8', 'pylint']}
 
 " Nerd tree
 autocmd StdinReadPre * let s:std_in=1
@@ -101,9 +96,6 @@ nmap <F9> :TagbarToggle<CR>
 " let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>']
 " let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
 
-" isort. not sure if we need this..
-let g:vim_isort_map = '<C-i>'
-
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -120,19 +112,26 @@ filetype plugin indent on    " required
 ""  Vundle plugin install end.
 
 " The Silver Searcher
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
+if executable('rg')
+  " Use rg over grep
+  set grepprg=rg\ --vimgrep
+  set grepformat=%f:%l:%c:%m,%f:%l:%m
+
+  let g:ackprg = 'rg --vimgrep --no-heading --smart-case'
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_user_command = 'rg --files %s'
 
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
+
+  let g:ctrlp_working_path_mode = 'ra'
+  let g:ctrlp_switch_buffer = 'et'
+
 endif
 
 " bind T to grep word under cursor
-nmap T :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap T :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap \ :Ag<SPACE>
@@ -142,7 +141,8 @@ nnoremap \ :Ag<SPACE>
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
 " set statusline+=%*
-"
+
+
 " let g:syntastic_always_populate_loc_list = 1
 " let g:syntastic_auto_loc_list = 1
 " let g:syntastic_check_on_open = 1
@@ -163,11 +163,12 @@ let g:ctrlp_custom_ignore = {
 
 
 " Markdown plugin shortcut
-" let vim_markdown_preview_hotkey='<C-p>'
-" let vim_markdown_preview_temp_file=0
-" let vim_markdown_preview_toggle=2
-" let vim_markdown_preview_github=1
-" let vim_markdown_preview_pandoc=0
+let vim_markdown_preview_hotkey='<C-m>'
+let vim_markdown_preview_temp_file=1
+let vim_markdown_preview_toggle=2
+let vim_markdown_preview_github=0
+let vim_markdown_preview_pandoc=0
+let vim_markdown_preview_perl=1
 
 " Write all buffers before navigating from Vim to tmux pane
 let g:tmux_navigator_save_on_switch = 2
@@ -181,7 +182,7 @@ let g:tmux_navigator_save_on_switch = 2
 
 " default mappings
 
-set clipboard+=unnamedplus
+" set clipboard+=unnamedplus
 set modelines=0
 set go+=a
 " copy and paste
@@ -295,8 +296,7 @@ catch
 endtry
 
 " set ffs=unix,dos,mac "Default file types
-autocmd BufWritePre *.py,*.go,*rc,*.sql,*.cpp,*.txt,*.sh,*.yaml,*.md  :retab | :%s/\s\+$//e
-let g:ackprg = 'ag --vimgrep'
+autocmd BufWritePre *.py,*.cpp,*.go,*rc,*.sql,*.cpp,*.txt,*.sh,*.yaml,*.md  :retab | :%s/\s\+$//e
 
 " If the current buffer has never been saved, it will have no name,
 " call the file browser to save it, otherwise just save it.
@@ -331,3 +331,7 @@ nnoremap [19;2~ :bprevious<CR>
 
 set ssop-=options    " do not store global and local values in a session
 set ssop-=folds      " do not store folds
+
+colorscheme delek
+" line number colors for light background
+hi LineNr term=bold cterm=bold ctermfg=2 guifg=Grey guibg=Grey90
