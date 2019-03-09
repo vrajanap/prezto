@@ -21,6 +21,7 @@ export JAVA_HOME=/usr/lib/jvm/default-java
 alias ff='find . -iname $@'
 alias fp="fzf --preview 'pygmentize -g  {} 2> /dev/null '"
 alias vp="vim \`fp\`"
+alias gfp="git fetch --prune"
 
 if [ $commands[kubectl] ]; then
   source <(kubectl completion zsh)
