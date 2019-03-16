@@ -52,6 +52,9 @@ Plugin 'HerringtonDarkholme/yats.vim'
 
 Plugin 'leafgarland/typescript-vim'
 
+Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+
 " All of your Plugins must be added before the following line
 call vundle#end()
 " required
