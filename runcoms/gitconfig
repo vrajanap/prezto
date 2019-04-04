@@ -6,17 +6,21 @@
 [merge]
 	; tool = meld
 	tool = kdiff3
+	tool = kdiff3
 [diff]
 	guitool = meld
 	; tool = meld
     tool = icdiff
+	guitool = kdiff3
 [difftool]
 	prompt = false
 [mergetool "kdiff3"]
 	keepBackup = false
 	trustExitCode = false
+	trustExitCode = false
 [difftool "kdiff3"]
 	keepBackup = false
+	trustExitCode = false
 	trustExitCode = false
 [difftool "icdiff"] 
     	cmd = icdiff --line-numbers $LOCAL $REMOTE
@@ -30,3 +34,5 @@
 	smudge = git-lfs smudge -- %f
 [url "git+ssh://git.launchpad.net/"]
         insteadof = lp:
+[icdiff]
+	options = --highlight --line-numbers
